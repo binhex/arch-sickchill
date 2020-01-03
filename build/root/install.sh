@@ -19,7 +19,7 @@ mv /tmp/scripts-master/shell/arch/docker/*.sh /usr/local/bin/
 ####
 
 # define pacman packages
-pacman_packages="python2 python2-cheetah python2-pyopenssl nodejs"
+pacman_packages="python2 python2-pyopenssl nodejs"
 
 # install compiled packages using pacman
 if [[ ! -z "${pacman_packages}" ]]; then
@@ -30,7 +30,7 @@ fi
 ####
 
 # define aur packages
-aur_packages=""
+aur_packages="python2-cheetah"
 
 # call aur install script (arch user repo)
 source aur.sh
