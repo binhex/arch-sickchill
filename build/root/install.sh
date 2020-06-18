@@ -55,7 +55,7 @@ source aur.sh
 ####
 
 # download sickchill
-github.sh -df "github-download.zip" -dp "/tmp" -ep "/tmp/extracted" -ip "/opt/sickchill" -go "SickChill" -gr "SickChill" -rt "source" -qt "tags"
+github.sh --install-path "/opt/sickchill" --github-owner "SickChill" --github-repo "SickChill" --query-type "tags"
 
 # container perms
 ####
