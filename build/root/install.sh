@@ -46,7 +46,7 @@ fi
 ####
 
 # define aur packages
-aur_packages="python2-cheetah"
+aur_packages=""
 
 # call aur install script (arch user repo)
 source aur.sh
@@ -54,13 +54,43 @@ source aur.sh
 # github releases
 ####
 
+install_path="/opt/sickchill"
+
 # download sickchill
-github.sh --install-path "/opt/sickchill" --github-owner "SickChill" --github-repo "SickChill" --query-type "tags"
+github.sh --install-path "${install_path}" --github-owner "SickChill" --github-repo "SickChill" --query-type "tags"
+
+# python
+####
+
+install_path="/opt/sickchill"
+
+# define pacman packages
+pacman_packages="python python-pip"
+
+# install compiled packages using pacman
+if [[ ! -z "${pacman_packages}" ]]; then
+	pacman -S --needed $pacman_packages --noconfirm
+fi
+
+cd "${install_path}"
+
+# install pip
+
+# install virtualenv, create env and activate
+python3 -m pip install --user virtualenv
+python3 -m venv env
+source "${install_path}/env/bin/activate"
+
+# install python modules as per requirements.txt in virtualenv
+pip install -r "${install_path}/requirements.txt"
+
+# install required packages
+pip install -r requirements.txt
 
 # container perms
 ####
 
-# define comma separated list of paths 
+# define comma separated list of paths
 install_paths="/opt/sickchill,/home/nobody"
 
 # split comma separated string into list for install paths
@@ -90,7 +120,7 @@ cat <<EOF > /tmp/permissions_heredoc
 previous_puid=\$(cat "/root/puid" 2>/dev/null || true)
 previous_pgid=\$(cat "/root/pgid" 2>/dev/null || true)
 
-# if first run (no puid or pgid files in /tmp) or the PUID or PGID env vars are different 
+# if first run (no puid or pgid files in /tmp) or the PUID or PGID env vars are different
 # from the previous run then re-apply chown with current PUID and PGID values.
 if [[ ! -f "/root/puid" || ! -f "/root/pgid" || "\${previous_puid}" != "\${PUID}" || "\${previous_pgid}" != "\${PGID}" ]]; then
 
