@@ -62,30 +62,8 @@ github.sh --install-path "${install_path}" --github-owner "SickChill" --github-r
 # python
 ####
 
-install_path="/opt/sickchill"
-
-# define pacman packages
-pacman_packages="python python-pip"
-
-# install compiled packages using pacman
-if [[ ! -z "${pacman_packages}" ]]; then
-	pacman -S --needed $pacman_packages --noconfirm
-fi
-
-cd "${install_path}"
-
-# install pip
-
-# install virtualenv, create env and activate
-python3 -m pip install --user virtualenv
-python3 -m venv env
-source "${install_path}/env/bin/activate"
-
-# install python modules as per requirements.txt in virtualenv
-pip install -r "${install_path}/requirements.txt"
-
-# install required packages
-pip install -r requirements.txt
+# source in pip.sh to install python modules required for app
+source '/usr/local/bin/pip.sh' "${install_path}"
 
 # container perms
 ####

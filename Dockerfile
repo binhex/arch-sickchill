@@ -10,13 +10,16 @@ ADD build/*.conf /etc/supervisor/conf.d/
 # add install bash script
 ADD build/root/*.sh /root/
 
+# add run bash script
+ADD run/nobody/*.sh /home/nobody/
+
 # install app
 #############
 
 # make executable and run bash scripts to install app
 RUN chmod +x /root/*.sh && \
 	/bin/bash /root/install.sh
-		
+
 # docker settings
 #################
 
