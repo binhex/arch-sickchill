@@ -63,7 +63,7 @@ github.sh --install-path "${install_path}" --github-owner "SickChill" --github-r
 ####
 
 # source in pip.sh to install python modules required for app
-source '/usr/local/bin/pip.sh' --pip-packages "sickchill"
+source '/usr/local/bin/pip.sh' --install-path "${install_path}" --pip-packages "sickchill"
 
 # container perms
 ####
