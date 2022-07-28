@@ -1,6 +1,7 @@
 #!/usr/bin/dumb-init /bin/bash
 
-install_path="/opt/sickchill"
+# get path to site-packages
+install_path=$(python -m site --user-site)
 
-# run app in virtualenv
-cd "${install_path}" && source './env/bin/activate' && python3 "${install_path}/SickChill.py" --config /config/config.ini --datadir /config
+# run app from python system
+python3 "${install_path}/SickChill.py" --config /config/config.ini --datadir /config

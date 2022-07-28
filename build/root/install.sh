@@ -38,7 +38,7 @@ fi
 ####
 
 # define pacman packages
-pacman_packages="python2 python2-pyopenssl nodejs"
+pacman_packages="python"
 
 # install compiled packages using pacman
 if [[ ! -z "${pacman_packages}" ]]; then
@@ -54,25 +54,18 @@ aur_packages=""
 # call aur install script (arch user repo)
 source aur.sh
 
-# github releases
-####
-
-install_path="/opt/sickchill"
-
-# download sickchill
-github.sh --install-path "${install_path}" --github-owner "SickChill" --github-repo "SickChill" --query-type "tags"
-
 # python
 ####
 
 # source in pip.sh to install python modules required for app
-source '/usr/local/bin/pip.sh' --install-path "${install_path}" --pip-packages "sickchill"
+# note - installing to python system, not virtualenv
+source '/usr/local/bin/pip.sh' --create-virtualenv 'no' --pip-packages "sickchill"
 
 # container perms
 ####
 
 # define comma separated list of paths
-install_paths="/opt/sickchill,/home/nobody"
+install_paths="/home/nobody"
 
 # split comma separated string into list for install paths
 IFS=',' read -ra install_paths_list <<< "${install_paths}"
