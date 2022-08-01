@@ -57,17 +57,17 @@ source aur.sh
 # github
 ####
 
-install_path="/opt/sickchill"
+src_install_path="/opt/sickchill"
 
 # download sickchill from branch 'master' (no releases at this time)
 # '--depth=1' ensures only latest commits to speed up download
-git clone --depth=1 --branch master https://github.com/SickChill/SickChill "${install_path}"
+git clone --depth=1 --branch master https://github.com/SickChill/SickChill "${src_install_path}"
 
 # python
 ####
 
 # location of source python app
-cd "${install_path}"
+cd "${src_install_path}"
 
 # install requirements via poetry config file (pyproject.toml)
 poetry install
@@ -79,7 +79,7 @@ site_packages_path=$(python3 -c "import sysconfig; print(sysconfig.get_path('pur
 ####
 
 # define comma separated list of paths
-install_paths="/home/nobody,${site_packages_path}"
+install_paths="/home/nobody,${site_packages_path},${src_install_path}"
 
 # split comma separated string into list for install paths
 IFS=',' read -ra install_paths_list <<< "${install_paths}"
