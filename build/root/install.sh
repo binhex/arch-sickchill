@@ -38,7 +38,7 @@ fi
 ####
 
 # define pacman packages
-pacman_packages="python"
+pacman_packages="python python-pip git python-poetry"
 
 # install compiled packages using pacman
 if [[ ! -z "${pacman_packages}" ]]; then
@@ -54,12 +54,23 @@ aur_packages=""
 # call aur install script (arch user repo)
 source aur.sh
 
+# github
+####
+
+install_path="/opt/sickchill"
+
+# download sickchill from branch 'master' (no releases at this time)
+# '--depth=1' ensures only latest commits to speed up download
+git clone --depth=1 --branch master https://github.com/SickChill/SickChill "${install_path}"
+
 # python
 ####
 
-# source in pip.sh to install python modules required for app
-# note - installing to python system, not virtualenv
-source '/usr/local/bin/pip.sh' --create-virtualenv 'no' --pip-packages "sickchill"
+# location of source python app
+cd "${install_path}"
+
+# install requirements via poetry config file (pyproject.toml)
+poetry install
 
 # container perms
 ####
