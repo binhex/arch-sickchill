@@ -72,11 +72,14 @@ cd "${install_path}"
 # install requirements via poetry config file (pyproject.toml)
 poetry install
 
+# get path to python system site-packages
+site_packages_path=$(python3 -c "import sysconfig; print(sysconfig.get_path('purelib'))")
+
 # container perms
 ####
 
 # define comma separated list of paths
-install_paths="/home/nobody"
+install_paths="/home/nobody,${site_packages_path}"
 
 # split comma separated string into list for install paths
 IFS=',' read -ra install_paths_list <<< "${install_paths}"
