@@ -38,7 +38,7 @@ fi
 ####
 
 # define pacman packages
-pacman_packages="python python-pip git python-poetry"
+pacman_packages="python python-pip"
 
 # install compiled packages using pacman
 if [[ ! -z "${pacman_packages}" ]]; then
@@ -54,32 +54,20 @@ aur_packages=""
 # call aur install script (arch user repo)
 source aur.sh
 
-# github
-####
-
-src_install_path="/opt/sickchill"
-
-# download sickchill from branch 'master' (no releases at this time)
-# '--depth=1' ensures only latest commits to speed up download
-git clone --depth=1 --branch master https://github.com/SickChill/SickChill "${src_install_path}"
-
 # python
 ####
 
-# location of source python app
-cd "${src_install_path}"
+install_path="/opt/sickchill"
 
-# install requirements via poetry config file (pyproject.toml)
-poetry install
+mkdir -p "${install_path}"
 
-# get path to python system site-packages
-site_packages_path=$(python3 -c "import sysconfig; print(sysconfig.get_path('purelib'))")
+pip.sh --create-virtualenv 'yes' --pip-packages 'sickchill' --virtualenv-path "${install_path}" --log-level 'WARN'
 
 # container perms
 ####
 
 # define comma separated list of paths
-install_paths="/home/nobody,${site_packages_path},${src_install_path}"
+install_paths="/home/nobody,${install_path}"
 
 # split comma separated string into list for install paths
 IFS=',' read -ra install_paths_list <<< "${install_paths}"
