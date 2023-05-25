@@ -4,4 +4,4 @@
 install_path="/opt/sickchill"
 
 # run app from python system
-python3 "${install_path}/lib/python3.10/site-packages/SickChill.py" --config /config/config.ini --datadir /config
+"${install_path}/bin/sickchill" --config /config/config.ini --datadir /config
