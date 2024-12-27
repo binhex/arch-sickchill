@@ -62,7 +62,7 @@ install_path="/opt/sickchill"
 
 mkdir -p "${install_path}"
 
-pip.sh --create-virtualenv 'yes' --pip-packages 'sickchill' --virtualenv-path "${install_path}" --log-level 'WARN'
+python.sh --create-virtualenv 'yes' --pip-packages 'sickchill' --virtualenv-path "${install_path}"
 
 # container perms
 ####
