@@ -31,7 +31,7 @@ if [[ -z "${TARGETARCH}" ]]; then
 fi
 
 # write APPNAME and RELEASETAG to file to record the app name and release tag used to build the image
-echo -e "export APPNAME=${APPNAME}\nexport IMAGE_RELEASE_TAG=${RELEASETAG}" >> '/etc/image-build-info'
+echo -e "export APPNAME=${APPNAME}\nexport IMAGE_RELEASE_TAG=${RELEASETAG}\n" >> '/etc/image-build-info'
 
 # ensure we have the latest builds scripts
 refresh.sh
@@ -56,14 +56,22 @@ aur_packages=""
 # call aur install script (arch user repo)
 source aur.sh
 
-# python
+# github
 ####
 
 install_path="/opt/sickchill"
+mkdir -p "${install_path}"
+
+# download sickchill from branch 'master'
+# '--depth=1' ensures only latest commits to speed up download
+git clone --depth=1 --branch master https://github.com/SickChill/sickchill "${install_path}"
+
+# python
+####
 
 mkdir -p "${install_path}"
 
-python.sh --create-virtualenv 'yes' --pip-packages 'sickchill' --virtualenv-path "${install_path}"
+python.sh --create-virtualenv 'yes' --requirements-path "${install_path}" --pyenv-version '3.12' --virtualenv-path "${install_path}"
 
 # container perms
 ####
